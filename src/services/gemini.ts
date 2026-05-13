@@ -27,7 +27,10 @@ export const askGemini = async (question: string): Promise<string> => {
     });
 
     if (!response.ok) {
-        throw new Error(`Gemini API request failed: ${response.status}`);
+        const errorBody = await response.text();
+        throw new Error(
+            `Gemini API request failed: ${response.status} ${response.statusText} ${errorBody}`.trim(),
+        );
     }
 
     const parsedResponse =
