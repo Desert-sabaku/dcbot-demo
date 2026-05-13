@@ -23,6 +23,18 @@ const commands = [
                 required: false,
             }
         ]
+    },
+    {
+        name: "ask",
+        description: "Geminiに質問します",
+        options: [
+            {
+                name: "question",
+                type: 3, // STRINGタイプ
+                description: "質問を入力してください",
+                required: true,
+            }
+        ]
     }
 ];
 
