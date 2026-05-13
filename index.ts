@@ -31,5 +31,17 @@ client.on("interactionCreate", async (interaction) => {
     }
 });
 
+client.on("interactionCreate", async (interaction) => {
+    if (!interaction.isChatInputCommand()) return;
+
+    if (interaction.commandName === "echo") {
+        let message = interaction.options.getString("message", true);
+        if (interaction.options.getBoolean("is_reversed")) {
+            message = message.split("").reverse().join("");
+        }
+        await interaction.reply(`📢 ${message}`);
+    }
+});
+
 // Botをログインさせる
 client.login(process.env.DISCORD_TOKEN);

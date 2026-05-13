@@ -6,6 +6,24 @@ const commands = [
         name: "ping",
         description: "Botの応答速度を確認します",
     },
+    {
+        name: "echo",
+        description: "指定したメッセージを繰り返します",
+        options: [
+            {
+                name: "message",
+                type: 3, // STRINGタイプ
+                description: "繰り返すメッセージを入力してください",
+                required: true,
+            },
+            {
+                name: "is_reversed",
+                type: 5, // BOOLEANタイプ
+                description: "メッセージを逆順に表示しますか？",
+                required: false,
+            }
+        ]
+    }
 ];
 
 // 2. RESTの準備
