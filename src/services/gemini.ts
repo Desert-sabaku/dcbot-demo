@@ -10,6 +10,8 @@ type GeminiGenerateContentResponse = {
     }>;
 };
 
+const RESPONSE_PREVIEW_LIMIT = 500;
+
 const url =
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent";
 const apiKey = requireEnv("GEMINI_API_KEY");
@@ -39,7 +41,7 @@ export const askGemini = async (question: string): Promise<string> => {
 
     if (!data) {
         throw new Error(
-            `Gemini API response does not contain text: ${JSON.stringify(parsedResponse).slice(0, 500)}`,
+            `Gemini API response does not contain text: ${JSON.stringify(parsedResponse).slice(0, RESPONSE_PREVIEW_LIMIT)}`,
         );
     }
 
