@@ -38,7 +38,9 @@ export const askGemini = async (question: string): Promise<string> => {
     const data = parsedResponse.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!data) {
-        throw new Error("Gemini API response does not contain text");
+        throw new Error(
+            `Gemini API response does not contain text: ${JSON.stringify(parsedResponse).slice(0, 500)}`,
+        );
     }
 
     return data;
