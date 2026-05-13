@@ -1,58 +1,20 @@
 import { REST, Routes } from "discord.js";
 
-// 1. 登録したいコマンドの定義
-const commands = [
-    {
-        name: "ping",
-        description: "Botの応答速度を確認します",
-    },
-    {
-        name: "echo",
-        description: "指定したメッセージを繰り返します",
-        options: [
-            {
-                name: "message",
-                type: 3, // STRINGタイプ
-                description: "繰り返すメッセージを入力してください",
-                required: true,
-            },
-            {
-                name: "is_reversed",
-                type: 5, // BOOLEANタイプ
-                description: "メッセージを逆順に表示しますか？",
-                required: false,
-            }
-        ]
-    },
-    {
-        name: "ask",
-        description: "Geminiに質問します",
-        options: [
-            {
-                name: "question",
-                type: 3, // STRINGタイプ
-                description: "質問を入力してください",
-                required: true,
-            }
-        ]
-    }
-];
+import { commandData } from "./src/commands";
+import { requireEnv } from "./src/config/env";
 
-// 2. RESTの準備
-const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN!);
+const token = requireEnv("DISCORD_TOKEN");
+const clientId = requireEnv("CLIENT_ID");
+const guildId = requireEnv("GUILD_ID");
 
-// 3. 登録の実行
-const token = process.env.DISCORD_TOKEN!;
-const clientId = process.env.CLIENT_ID!;
-const guildId = process.env.GUILD_ID!;
+const rest = new REST({ version: "10" }).setToken(token);
 
 (async () => {
     try {
         console.log("スラッシュコマンドの登録を開始します...");
 
-        // 特定のサーバー（ギルド）に対してコマンドを登録
         await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-            body: commands,
+            body: commandData,
         });
 
         console.log("スラッシュコマンドの登録に成功しました！🎉");
